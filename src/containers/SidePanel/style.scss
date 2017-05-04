@@ -1,0 +1,22 @@
+:local(.header) {
+  font-weight: 700;
+}
+:local(.subheader) {
+  font-weight: 300;
+}
+:local(.menu) {
+  width: 270px;
+  max-width: 270px;
+  display: block;
+  flex: 1;
+  overflow-y: auto;
+
+  a {
+    text-decoration: none;
+  }
+}
+:local(.drawer) {
+  a {
+    text-decoration: none;
+  }
+}

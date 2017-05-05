@@ -1,4 +1,4 @@
-import {actionUsers} from "../../actions/User";
+import {userActions, userSetAuthorizeInterface} from "../../actions/User";
 /**
  * Created by achernushevich on 02.05.17.
  */
@@ -22,15 +22,15 @@ const _unAuthorizeUser = (state: any) => {
     }
 };
 
-export const UserAuthorizeStatus = (state = DEFAULT_STATE, action: any) => {
+export const UserAuthorizeStatus = (state = DEFAULT_STATE, action: userSetAuthorizeInterface) => {
     switch (action.type) {
-        case actionUsers.SET_AUTHORIZE:
+        case userActions.SET_AUTHORIZE:
             return _authorizeUser(state);
-        case actionUsers.SET_UN_AUTORIZE:
+        case userActions.SET_UN_AUTORIZE:
             return _unAuthorizeUser(state);
         default:
             return state;
     }
 };
 
-export const stateUserAuthorizeStatus = (state: any) => state.UserAuthorizeStatus;
+export const UserAuthorizeStatusState = (state: any) => state.UserAuthorizeStatus;

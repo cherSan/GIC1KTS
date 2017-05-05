@@ -2,7 +2,7 @@
   "name": "GIC1K",
   "version": "0.0.1",
   "scripts": {
-    "browser:build": "webpack --config ./webpack/webpack.config.js",
+    "browser:build": "webpack --config ./webpack/webpack.config.js --watch",
     "browser:serve": "webpack-dev-server --config ./webpack/webpack.config.js --port 3000 --watch"
   },
   "devDependencies": {
@@ -23,8 +23,9 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
-    "@types/material-ui": "^0.17.5",
     "@types/react": "^15.0.23",
+    "@types/react-dnd": "^2.0.32",
+    "@types/react-dnd-html5-backend": "^2.1.7",
     "@types/react-dom": "^15.5.0",
     "@types/react-redux": "^4.4.40",
     "@types/react-router": "^4.0.6",
@@ -34,7 +35,10 @@
     "@types/redux-logger": "^3.0.0",
     "@types/redux-thunk": "^2.1.0",
     "material-ui": "^1.0.0-alpha.12",
+    "material-ui-icons": "^1.0.0-alpha.3",
     "react": "=15.4.2",
+    "react-dnd": "^2.3.0",
+    "react-dnd-html5-backend": "^2.3.0",
     "react-dom": "=15.4.2",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",

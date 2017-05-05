@@ -2,45 +2,34 @@
  * Created by achernushevich on 03.05.17.
  */
 import * as React from "react";
-import {setAuthorize} from "../../actions/User";
-import {stateUserAuthorizeStatus} from "../../reducers/User/AuthorizeStatus";
-import {Page} from "../../decorators/Page";
-import {Router} from "react-router";
-import {Layout} from "../../components/Layout/Layout";
-import {SidePanel} from "../SidePanel/SidePanel";
+import {Container} from "../../core/decorators/Container";
+import {ApplicationContainer} from "../../core/ApplicationContainer";
+import {Paper, TextField, Typography, Card, Button} from "material-ui";
 
+interface Props {}
+interface Listeners {}
+interface Actions {}
 
-interface Props {
-
-}
-
-const mapStateToProps = {
-    isUserAuthorize: stateUserAuthorizeStatus
-};
-const mapActionToProps = {
-    setAuthorize: setAuthorize
-};
-
-
-@Page({
-    meta:{
-        pageName: 'Sign Up'
-    }
+@Container({
+    styles: "containers/SignUp/style.scss"
 })
-export class SignUp extends React.Component<Props, undefined> {
+export class SignUp extends ApplicationContainer<Props, Listeners, Actions, undefined> {
     constructor(props: any) {
         super(props);
     }
 
-    componentWillLeave(){
-        console.log(123)
-    }
-
     render() {
         return (
-            <div>
-                SignIn
-            </div>
+            <Card elevation={4} className={this.classes.card}>
+                <TextField
+                    label="Login"
+                />
+                <TextField
+                    type="password"
+                    label="Password"
+                />
+                <Button raised primary>Sign Up</Button>
+            </Card>
         );
     }
 }

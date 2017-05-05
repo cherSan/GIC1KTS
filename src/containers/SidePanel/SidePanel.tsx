@@ -1,96 +1,74 @@
 /**
  * Created by achernushevich on 02.05.17.
  */
-import * as React from 'react'
-import {Connect} from "../../decorators/Connect";
-import {menu} from './Menu';
-import {Link} from "react-router-dom";
-import {stateUserAuthorizeStatus} from "../../reducers/User/AuthorizeStatus";
-import {MenuItem, Divider, Drawer, AppBar} from "material-ui";
 
+import * as React from 'react'
+
+import {Drawer, Toolbar, Typography} from "material-ui";
+import {UnAuthorizeUserMenu} from "../../components/Menus/UnAuthorizeUserMenu";
+import {AuthorizeUserMenu} from "../../components/Menus/AuthorizeUserMenu";
+import {MenuState} from "../../reducers/Menu/Menu";
+import {Container} from "../../core/decorators/Container";
+import {menuHide} from "../../actions/Menu";
+import {ApplicationContainer} from "../../core/ApplicationContainer";
+import {WindowIsWideState} from "../../reducers/Window/IsWide";
 
 interface Props {
-    isUserAuthorize?: boolean,
-    hideMenu?: any
+    isUserAuthorize: boolean
+}
+interface Listeners {
+    isWindowWide: boolean,
+    menuOpened: boolean,
+}
+interface Actions {
+    menuHide: () => {}
 }
 
-const mapStateToProps = {
-    isUserAuthorize: stateUserAuthorizeStatus
-};
-
-@Connect({
-    listeners: mapStateToProps,
-    // styles: "containers/SidePanel/style.scss"
+@Container({
+    listeners: {
+        isWindowWide: WindowIsWideState,
+        menuOpened: MenuState,
+    },
+    actions: {
+        menuHide: menuHide,
+    },
+    styles: "containers/SidePanel/style.scss"
 })
-export class SidePanel extends React.Component<Props, undefined> {
+export class SidePanel extends ApplicationContainer<Props, Listeners, Actions, undefined> {
 
     constructor(props: any) {
         super(props);
     }
 
-    generateMenuItem(item: any) {
-        switch (item.type) {
-            case "title":
-                return <MenuItem key={item.key} primaryText={item.primaryText} disabled={true} />
-            case "link":
-                return (
-                    <Link to={item.to} key={item.key}>
-                        <MenuItem
-                            primaryText={item.primaryText}
-                            leftIcon={item.leftIcon}
-                        />
-                    </Link>
-                );
-            case "separator":
-                return <Divider key={item.key} />
-            case "action":
-                return (
-                    <Link to={item.to} key={item.key}>
-                        <MenuItem
-                            primaryText={item.primaryText}
-                            leftIcon={item.leftIcon}
-                        />
-                    </Link>
-                )
-        }
-    }
-
-    handleClose = () => {
-        this.props.hideMenu()
+    hideMenu = () => {
+        this.props.menuHide()
     };
-
 
     render() {
         let {
-            isUserAuthorize
+            menuOpened,
+            isUserAuthorize,
+            isWindowWide
         } = this.props;
 
-        let UserMenu = isUserAuthorize ? menu.AuthUser(() => {console.log('logOut')}) : menu.NonAuthUser();
+        let UserMenu = isUserAuthorize ? AuthorizeUserMenu : UnAuthorizeUserMenu;
+        let open = isWindowWide || menuOpened;
+
         return (
             <Drawer
-                width={270}
-                onRequestChange={() => this.handleClose()}
+                open={open}
+                docked={isWindowWide}
+                leaveTransitionDuration={300}
+                enterTransitionDuration={300}
+                onRequestClose={this.hideMenu}
+                className={this.classes.drawer}
             >
-                <AppBar
-                    showMenuIconButton={false}
-                    title={
-                        <div>
-                            <img src="https://onekstorage.blob.core.windows.net/ngapp/assets/img/gic_white.png"
-                                 style={{
-                                     height: '25px'
-                                 }}
-                            />
-                            <span >One</span>
-                            <span >Knowledge</span>
-                        </div>
-                    }
-                >
-                </AppBar>
-                {
-                    UserMenu.map(item => {
-                        return this.generateMenuItem(item)
-                    })
-                }
+                <div className={this.classes.panel}>
+                    <Toolbar style={{background: '#3f51b5'}}>
+                        <Typography type="title" colorInherit style={{color: '#fff'}}><b>One</b>Knowledge</Typography>
+                    </Toolbar>
+                    <UserMenu />
+                </div>
             </Drawer>
         );
     }

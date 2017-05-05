@@ -1,21 +1,14 @@
-:local(.header) {
-  font-weight: 700;
+:local(.drawer) {
+  position: relative;
+  width: 250px;
 }
-:local(.subheader) {
-  font-weight: 300;
-}
-:local(.menu) {
-  width: 270px;
-  max-width: 270px;
+
+:local(.panel) {
+  width: 250px;
+  max-width: 250px;
   display: block;
   flex: 1;
   overflow-y: auto;
-
-  a {
-    text-decoration: none;
-  }
-}
-:local(.drawer) {
   a {
     text-decoration: none;
   }

@@ -3,6 +3,11 @@
  */
 
 module.exports = {
+  watch: true,
+  devServer: {
+    port: 3000,
+    historyApiFallback: true
+  },
   entry: {
     bundle: "./src/index.tsx",
   },

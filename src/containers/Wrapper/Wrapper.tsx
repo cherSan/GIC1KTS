@@ -2,46 +2,57 @@
  * Created by achernushevich on 02.05.17.
  */
 import * as React from "react";
-import {setAuthorize} from "../../actions/User";
-import {stateUserAuthorizeStatus} from "../../reducers/User/AuthorizeStatus";
-import {Page} from "../../decorators/Page";
+import {Layout} from "material-ui";
+
+import {UserAuthorizeStatusState} from "../../reducers/User/AuthorizeStatus";
+import {Container} from "../../core/decorators/Container";
 import {Route, Switch, Redirect} from "react-router-dom";
-import {Layout} from "../../components/Layout/Layout";
 import {SidePanel} from "../SidePanel/SidePanel";
 import {SignIn} from "../SignIn/SignIn";
 import {SignUp} from "../SignUp/SignUp";
+import {ApplicationContainer} from "../../core/ApplicationContainer";
+import {ApplicationBar} from "../ApplicationBar/ApplicationBar";
+import {Dashboard} from "../Dashboard/Dashboard";
 
 
 interface Props {
-
+}
+interface Listeners {
+    isUserAuthorize: boolean
+}
+interface Actions {
 }
 
-const mapStateToProps = {
-    isUserAuthorize: stateUserAuthorizeStatus
-};
-const mapActionToProps = {
-    setAuthorize: setAuthorize
-};
-
-
-@Page({
-    meta:{
-        pageName: 'Wrapper'
-    }
+@Container({
+    actions: {
+    },
+    listeners: {
+        isUserAuthorize: UserAuthorizeStatusState
+    },
+    styles: "containers/Wrapper/style.scss"
 })
-export class Wrapper extends React.Component<Props, undefined> {
+export class Wrapper extends ApplicationContainer<Props, Listeners, Actions, undefined> {
     constructor(props: any) {
         super(props);
     }
 
     render() {
+        let {
+            isUserAuthorize,
+        } = this.props;
         return (
-            <Layout width="100%" height="100%" direction="row">
-                <SidePanel />
-                <Switch>
-                    <Route component={SignIn as any} path="/public/sign-in" />
-                    <Route component={SignUp as any} path="/public/sign-pn" />
-                </Switch>
+            <Layout container>
+                <SidePanel isUserAuthorize={isUserAuthorize} />
+                <Layout item xs={12} className={this.classes.content}>
+                    <ApplicationBar title="Sign Up" />
+                    <Layout item xs={12} className={this.classes.contentContainer}>
+                        <Switch>
+                            <Route component={SignIn as any} path="/public/sign-in" />
+                            <Route component={SignUp as any} path="/public/sign-up" />
+                            <Route component={Dashboard as any} path="/public/dashboard" />
+                        </Switch>
+                    </Layout>
+                </Layout>
             </Layout>
         );
     }

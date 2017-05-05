@@ -2,41 +2,46 @@
  * Created by achernushevich on 03.05.17.
  */
 import * as React from "react";
-import {setAuthorize} from "../../actions/User";
-import {stateUserAuthorizeStatus} from "../../reducers/User/AuthorizeStatus";
-import {Page} from "../../decorators/Page";
+import {Container} from "../../core/decorators/Container";
+import {Paper, TextField, Typography, Card, Button} from "material-ui";
+import {ApplicationContainer} from "../../core/ApplicationContainer";
+import {userSetAuthorize} from "../../actions/User";
 
-interface Props {
-
+interface Props {}
+interface Listeners {}
+interface Actions {
+    signIn: () => {}
 }
 
-const mapStateToProps = {
-    isUserAuthorize: stateUserAuthorizeStatus
-};
-const mapActionToProps = {
-    setAuthorize: setAuthorize
-};
-
-
-@Page({
-    meta:{
-        pageName: 'Sign In'
-    }
+@Container({
+    actions: {
+        signIn: userSetAuthorize
+    },
+    styles: "containers/SignIn/style.scss"
 })
-export class SignIn extends React.Component<Props, undefined> {
+export class SignIn extends ApplicationContainer<Props, Listeners, Actions, undefined> {
     constructor(props: any) {
         super(props);
     }
 
-    componentWillLeave(){
-        console.log(123)
+    signIn = () => {
+        this.props.signIn();
+        this.props.history.push('/public/dashboard')
     }
 
     render() {
+
         return (
-            <div>
-                SignIn
-            </div>
+            <Card elevation={4} className={this.classes.card}>
+                <TextField
+                    label="Login"
+                />
+                <TextField
+                    type="password"
+                    label="Password"
+                />
+                <Button raised primary onClick={this.signIn}>Sign In</Button>
+            </Card>
         );
     }
 }

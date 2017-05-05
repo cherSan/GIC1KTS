@@ -1,13 +1,22 @@
 /**
  * Created by achernushevich on 02.05.17.
  */
-export module actionPage {
-    export const SET_META = 'SET_META';
+export module pageActions {
+    export const SET_META = 'PAGE:SET_META';
 }
 
-export const setPageMeta = (meta: any) => {
+export interface pageMeta {
+    pageName: string
+}
+
+export interface pageSetMetaInterface {
+    type: string,
+    data: pageMeta
+}
+
+export const pageSetMeta = (meta: pageMeta) => {
     return  {
-        type: actionPage.SET_META,
+        type: pageActions.SET_META,
         data: meta
     }
 };

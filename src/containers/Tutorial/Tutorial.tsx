@@ -1,21 +1,19 @@
 import * as React from "react";
-import {Page} from "../../decorators/Page";
+import {Container} from "../../core/decorators/Container";
 import {Link} from "react-router-dom";
+import {ApplicationContainer} from "../../core/ApplicationContainer";
 /**
  * Created by achernushevich on 03.05.17.
  */
 
 
-interface Props {
+interface Props {}
+interface Listeners {}
+interface Actions {}
 
-}
-
-@Page({
-    meta: {
-        pageName: 'Tutorial'
-    }
+@Container({
 })
-export class Tutorial extends React.Component<Props, undefined> {
+export class Tutorial extends ApplicationContainer<Props, Listeners, Actions, undefined> {
     constructor(props: any) {
         super(props);
     }
